@@ -1,0 +1,58 @@
+1주차 — 기반 세팅 + Java 기초
+공부할 것
+
+Java 클래스, 객체, 생성자
+ArrayList, for문
+인터페이스, DAO 패턴 개념
+
+해야할 것
+
+Oracle DB 설치 확인, 계정 세팅
+Book, Member, Loan 클래스 만들기
+BookDAO 인터페이스 + BookDAOImpl 작성
+Oracle 테이블 3개 생성 (BOOK, MEMBER, LOAN)
+
+
+
+
+
+
+
+
+2주차 — JDBC 연결 + 기능 구현
+공부할 것
+
+JDBC (Connection, PreparedStatement, ResultSet)
+Oracle SQL (INSERT, SELECT, UPDATE, DELETE)
+Spring Boot 기초 또는 순수 Java 서버
+
+해야할 것
+
+DBConnection 클래스 작성
+도서 CRUD 전체 구현
+대출 등록 / 반납 처리 구현
+연체 조회 쿼리 작성
+
+
+
+
+
+
+
+
+
+
+
+3주차 — HTML 화면 연동 + 마무리
+공부할 것
+
+HTML/CSS 기본 (AI 활용 가능)
+fetch API (JS에서 Java 서버 호출)
+JSON 개념
+
+해야할 것
+
+대시보드 / 도서목록 / 대출반납 화면 완성
+더미 데이터 50건 넣기 (AI 합성)
+패키지 정리 (model / dao / service / controller / util)
+발표 준비
