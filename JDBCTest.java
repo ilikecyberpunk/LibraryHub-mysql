@@ -1,42 +1,36 @@
 import java.sql.*;
-public class JDBCTest {
-	public static void main(String[] args) {
-		//1.필요한 변수 선언 및 초기화
-		String driver = "oracle.jdbc.driver.OracleDriver"; //드라이버 
-		String url = "jdbc:oracle:thin:@localhost:1521:xe"; //접속정보
-		String userid = "SYS"; //접속계정
-		String passwd = "a93686351@"; //패스워드 
 
-		Connection con = null;
-		Statement stmt = null;
-		ResultSet rs = null;
+public class JDBCTest{
+	public static void main(String[] args){
+		String url = "jdbc:oracle:thin:@localhost:1521/xe";
+		String sql = "SELECT * FROM BOOK";
+		
+		try{
 
-		try { //2.JDBC 드라이버 로딩
-			Class.forName(driver);
-			System.out.println("드라이버 로딩 성공");
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			Connection con = DriverManager.getConnection(url, "c##kimtaeho1", "8165");
+			Statement st = con.createStatement();
+			ResultSet rs = st.executeQuery(sql);
 
-			//3.DB 접속 - Connection
-			con = DriverManager.getConnection(url, userid, passwd);
-			System.out.println("DB 접속 성공");
+			rs.next();
 
-			//4.SQL 문 작성
-			String sql = "select * from B";
+			int bookid = rs.getInt("BOOK_ID");
+			String title = rs.getString("TITLE");
+			String author   = rs.getString("AUTHOR");
+    		String isAvail  = rs.getString("IS_AVAILABLE");
 
+			System.out.println("BOOK ID : "+bookid);
+			System.out.println("TITLE : " + title);
+			System.out.println("AUTHOR : " + author);
+    		System.out.println("IS_AVAILABLE : " + isAvail);
 			
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-			System.out.println("드라이버 로딩 실패");
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally { //7.자원 반납
-			try {
-				if (rs != null) rs.close();
-				if (stmt != null) stmt.close();
-				if (con != null) con.close();
-				System.out.println("자원반납 완료");
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+
+			rs.close();
+			st.close();
+			con.close();
+		}
+		catch(Exception e){
+			System.out.println(e);
 		}
 	}
 }
