@@ -87,7 +87,7 @@ public class MemberDAOImpl implements MemberDAO {
         try{
             st = con.prepareStatement(sql);
             st.setInt(1, memberId);
-            st.executeQuery();
+            st.executeUpdate();
         }
         catch(Exception e){
             System.out.println(e);
@@ -103,7 +103,6 @@ public class MemberDAOImpl implements MemberDAO {
         MemberDAOImpl a = new MemberDAOImpl();
         // a.addMember(new Member(21,"kimtaeho", "01012345678"));
         // a.findById(21);
-        a.deleteMember(2);
-        
+        // a.deleteMember(2);
     }
 }
