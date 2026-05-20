@@ -1,4 +1,10 @@
+package dao.impl;
 import java.util.*;
+
+import dao.MemberDAO;
+import model.Member;
+import util.DBConnection;
+
 import java.sql.*;
 
 public class MemberDAOImpl implements MemberDAO {

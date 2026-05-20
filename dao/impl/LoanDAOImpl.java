@@ -1,4 +1,8 @@
+package dao.impl;
 import java.sql.*;
+
+import dao.LoanDAO;
+import util.DBConnection;
 
 public class LoanDAOImpl implements LoanDAO {
     public void registerLoan(int bookId, int memberId){

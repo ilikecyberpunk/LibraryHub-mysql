@@ -1,4 +1,7 @@
+package dao;
 import java.util.*;
+
+import model.Member;
 
 public interface MemberDAO {
     void addMember(Member member);

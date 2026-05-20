@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 
+import model.Book;
+
 public class practice {
     public static void main(String[] args){
         ArrayList<Book> booklist = new ArrayList<>();
