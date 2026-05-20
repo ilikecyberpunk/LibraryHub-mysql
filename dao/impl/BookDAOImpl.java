@@ -8,7 +8,7 @@ public class BookDAOImpl implements BookDAO {
     public void addBook(Book book){
         Connection con = DBConnection.getConnection();
         PreparedStatement pstmt = null;
-        String sql = "INSERT INTO BOOK(BOOK_ID, TITLE, AUTHOR, IS_AVAILABLE) VALUES(book_seq.nextval, ?, ?, ?)";
+        String sql = "INSERT INTO BOOK(TITLE, AUTHOR, IS_AVAILABLE) VALUES( ?, ?, ?)";
 
         try{
             pstmt = con.prepareStatement(sql);

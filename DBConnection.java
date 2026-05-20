@@ -1,9 +1,9 @@
 import java.sql.*;
 
 public class DBConnection {
-	private static String url = "jdbc:oracle:thin:@localhost:1521/xe";
-	private static String UserId = "c##kimtaeho1";
-	private static String pwd = "8165";
+	private static String url = "jdbc:mysql://127.0.0.1:3306/BOOK_DB?serverTimezone=UTC&useSSL=false";
+	private static String UserId = "root";
+	private static String pwd = "a93686351@";
 
 	public static Connection getConnection(){
 		try{

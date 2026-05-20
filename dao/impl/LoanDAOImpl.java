@@ -5,7 +5,7 @@ public class LoanDAOImpl implements LoanDAO {
         Connection con = DBConnection.getConnection();
         PreparedStatement st = null;
         
-        String sql = "INSERT INTO LOAN(LOAN_ID, BOOK_ID, MEMBER_ID, LOAN_DATE) VALUES(LOAN_SEQ.NEXTVAL, ?, ?, SYSDATE)";
+        String sql = "INSERT INTO LOAN( BOOK_ID, MEMBER_ID) VALUES(?, ?)";
         try{
             st = con.prepareStatement(sql);
             st.setInt(1,bookId);

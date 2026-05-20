@@ -7,7 +7,7 @@ public class MemberDAOImpl implements MemberDAO {
         Connection con = DBConnection.getConnection();
         PreparedStatement st = null;
 
-        String sql = "INSERT INTO MEMBER(MEMBER_ID, NAME, PHONE) VALUES(MEMBER_SEQ.NEXTVAL, ?, ?)";
+        String sql = "INSERT INTO MEMBER( NAME, PHONE) VALUES( ?, ?)";
         try{
             st = con.prepareStatement(sql);
             st.setString(1, member.getName());
@@ -101,8 +101,8 @@ public class MemberDAOImpl implements MemberDAO {
     public static void main(String[] args){
         //테스트
         MemberDAOImpl a = new MemberDAOImpl();
-        a.addMember(new Member(231,"닝겐", "01012345678"));
-        // a.findById(21);
+        // a.addMember(new Member(231,"닝겐", "01012345678"));
+        a.findById(1);
         // a.deleteMember(2);
     }
 }
