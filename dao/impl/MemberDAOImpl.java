@@ -70,9 +70,8 @@ public class MemberDAOImpl implements MemberDAO {
         try{
             st = con.prepareStatement(sql);
             rs = st.executeQuery();
-            if(rs.next()){
+            while(rs.next()){
                 m.add(new Member(rs.getInt("MEMBER_ID"), rs.getString("NAME"), rs.getString("PHONE")));
-                return m;
             }
         }catch(Exception e){
             System.out.println(e);
@@ -81,7 +80,7 @@ public class MemberDAOImpl implements MemberDAO {
             DBConnection.close(con, st, rs);
         }
         System.out.println("찾기 성공");
-        return null;
+        return m;
     }
 
     public void deleteMember(int memberId){

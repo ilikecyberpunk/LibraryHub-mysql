@@ -56,7 +56,33 @@ public class LoanDAOImpl implements LoanDAO {
     }
 
     //연체조회
-    public void getOverdueList(){
-        
+    public void getOverdueList() {
+    Connection con = DBConnection.getConnection();
+    PreparedStatement pstmt = null;
+    ResultSet rs = null;
+    String sql = "SELECT MEMBER.NAME, BOOK.TITLE, LOAN.LOAN_DATE, "
+               + "DATEDIFF(NOW(), LOAN.LOAN_DATE) AS OVERDUE_DAYS "
+               + "FROM LOAN "
+               + "JOIN BOOK ON LOAN.BOOK_ID = BOOK.BOOK_ID "
+               + "JOIN MEMBER ON LOAN.MEMBER_ID = MEMBER.MEMBER_ID "
+               + "WHERE LOAN.RETURN_DATE IS NULL "
+               + "AND DATEDIFF(NOW(), LOAN.LOAN_DATE) > 14 "
+               + "ORDER BY OVERDUE_DAYS DESC";
+    try {
+        pstmt = con.prepareStatement(sql);
+        rs = pstmt.executeQuery();
+        while (rs.next()) {
+            System.out.println(
+                rs.getString("NAME") + " / " +
+                rs.getString("TITLE") + " / " +
+                rs.getDate("LOAN_DATE") + " / " +
+                rs.getInt("OVERDUE_DAYS") + "일 연체"
+            );
+        }
+    } catch (Exception e) {
+        System.out.println(e);
+    } finally {
+        DBConnection.close(con, pstmt, rs);
     }
+}
 }
