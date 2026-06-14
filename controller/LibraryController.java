@@ -9,6 +9,8 @@ import model.Book;
 import model.Member;
 import java.io.*;
 import java.net.InetSocketAddress;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
 
 public class LibraryController {
@@ -89,6 +91,39 @@ public class LibraryController {
 
         server.start();
         System.out.println("서버 시작: http://localhost:8080");
+        // 대출 목록 조회 - main() 안에 추가
+server.createContext("/loans", exchange -> {
+    addCors(exchange);
+    if ("OPTIONS".equals(exchange.getRequestMethod())) { exchange.sendResponseHeaders(204, -1); return; }
+    Connection con = util.DBConnection.getConnection();
+    PreparedStatement pstmt = null;
+    java.sql.ResultSet rs = null;
+    String sql = "SELECT L.LOAN_ID, B.TITLE, M.NAME, L.LOAN_DATE " +
+                 "FROM LOAN L " +
+                 "JOIN BOOK B ON L.BOOK_ID = B.BOOK_ID " +
+                 "JOIN MEMBER M ON L.MEMBER_ID = M.MEMBER_ID " +
+                 "WHERE L.RETURN_DATE IS NULL " +
+                 "ORDER BY L.LOAN_ID DESC";
+    StringBuilder sb = new StringBuilder("[");
+    try {
+        pstmt = con.prepareStatement(sql);
+        rs = pstmt.executeQuery();
+        boolean first = true;
+        while (rs.next()) {
+            if (!first) sb.append(",");
+            sb.append("{\"loanId\":").append(rs.getInt("LOAN_ID"))
+              .append(",\"title\":\"").append(escape(rs.getString("TITLE"))).append("\"")
+              .append(",\"name\":\"").append(escape(rs.getString("NAME"))).append("\"")
+              .append(",\"loanDate\":\"").append(rs.getDate("LOAN_DATE")).append("\"}");
+            first = false;
+        }
+    } catch (Exception e) { System.out.println(e); }
+    finally {
+        try { if(rs!=null)rs.close(); if(pstmt!=null)pstmt.close(); if(con!=null)con.close(); } catch(Exception e){}
+    }
+    sb.append("]");
+    sendResponse(exchange, sb.toString());
+    });
     }
 
     static void addCors(HttpExchange exchange) {
@@ -109,4 +144,6 @@ public class LibraryController {
         if (s == null) return "";
         return s.replace("\\", "\\\\").replace("\"", "\\\"");
     }
+
+    
 }

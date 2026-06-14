@@ -101,6 +101,13 @@
         </div>
 
         <div id="loan" class="page">
+            <div class="section-title">현재 대출 목록</div>
+        <table id="loanTable" style="margin-bottom:24px;">
+            <thead>
+                <tr><th>대출 ID</th><th>도서 제목</th><th>회원 이름</th><th>대출일</th></tr>
+            </thead>
+            <tbody></tbody>
+        </table>
             <div class="section-title">대출 등록</div>
             <div class="form-box">
                 <input type="number" id="loanBookId" placeholder="도서 ID">
@@ -130,6 +137,7 @@
             if (name === 'dashboard') loadDashboard();
             if (name === 'books') loadBooks();
             if (name === 'members') loadMembers();
+            if (name === 'loan') loadLoans();
         }
 
         async function loadBooks() {
@@ -195,6 +203,18 @@
             });
             const data = await res.json();
             document.getElementById('returnMsg').textContent = data.result;
+        }
+
+            async function loadLoans() {
+            const res = await fetch(API + '/loans');
+            const loans = await res.json();
+            document.querySelector('#loanTable tbody').innerHTML = loans.map(l => `
+            <tr>
+                    <td><strong style="color:#2563eb">${l.loanId}</strong></td>
+                    <td>${l.title}</td>
+                    <td>${l.name}</td>
+                    <td>${l.loanDate}</td>
+            </tr>`).join('');
         }
 
         loadDashboard();

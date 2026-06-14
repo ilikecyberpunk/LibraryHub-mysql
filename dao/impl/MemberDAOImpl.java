@@ -102,7 +102,7 @@ public class MemberDAOImpl implements MemberDAO {
         }
         System.out.println("삭제완료");
     }
-
+   
     public static void main(String[] args){
         //테스트
         MemberDAOImpl a = new MemberDAOImpl();
